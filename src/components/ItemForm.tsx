@@ -9,7 +9,7 @@ type Props = {
 
 export default function ItemForm({ item, onSave, onClose }: Props) {
   const [name, setName] = useState('')
-  const [price, setPrice] = useState('')
+  const [price, setPrice] = useState('1')
   const [qty, setQty] = useState('1')
   const [category, setCategory] = useState('')
   const [note, setNote] = useState('')
