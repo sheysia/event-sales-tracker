@@ -98,7 +98,7 @@ export default function SummaryTab({ onUndo }: Props) {
 
       {/* Actions */}
       <div className="flex gap-2">
-        <button onClick={handleCopy} className="flex-1 py-3 rounded-lg bg-slate-800 text-white font-medium text-sm">
+        <button onClick={handleCopy} className="flex-1 py-3 rounded-lg bg-iris-600 text-white font-medium text-sm">
           Copy Summary
         </button>
         <button onClick={handleShare} className="flex-1 py-3 rounded-lg border border-slate-300 text-slate-700 font-medium text-sm">
@@ -113,7 +113,7 @@ export default function SummaryTab({ onUndo }: Props) {
           const time = new Date(sale.soldAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
           return (
             <div key={sale.id} className="bg-white rounded-xl p-4 shadow-sm border border-slate-100 flex items-center gap-3">
-              <div className="w-7 h-7 rounded-full bg-slate-100 flex items-center justify-center text-xs font-bold text-slate-500 shrink-0">
+              <div className="w-7 h-7 rounded-full bg-iris-50 flex items-center justify-center text-xs font-bold text-iris-500 shrink-0">
                 {sales.length - i}
               </div>
               <div className="flex-1 min-w-0">

@@ -80,7 +80,7 @@ export default function Dashboard({ onSold }: Props) {
                 key={f.key}
                 onClick={() => setFilter(f.key)}
                 className={`px-3 py-1.5 rounded-full text-sm font-medium ${
-                  filter === f.key ? 'bg-slate-800 text-white' : 'bg-slate-100 text-slate-500'
+                  filter === f.key ? 'bg-iris-700 text-white' : 'bg-slate-100 text-slate-500'
                 }`}
               >
                 {f.label}
@@ -118,7 +118,7 @@ export default function Dashboard({ onSold }: Props) {
       {/* FAB */}
       <button
         onClick={() => setShowForm(true)}
-        className="fixed bottom-20 right-5 w-14 h-14 bg-slate-800 text-white rounded-full shadow-lg text-2xl flex items-center justify-center active:bg-slate-700"
+        className="fixed bottom-20 right-5 w-14 h-14 bg-iris-600 text-white rounded-full shadow-lg text-2xl flex items-center justify-center active:bg-iris-700"
       >
         +
       </button>

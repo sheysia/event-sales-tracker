@@ -13,14 +13,14 @@ export default function HomescreenBanner() {
   if (!show) return null
 
   return (
-    <div className="bg-blue-600 text-white px-4 py-3 flex items-center gap-3 text-sm">
+    <div className="bg-teal-600 text-white px-4 py-3 flex items-center gap-3 text-sm">
       <div className="flex-1">
         <p className="font-medium">Add to Home Screen for the best experience</p>
-        <p className="text-blue-100 text-xs mt-0.5">Tap Share → "Add to Home Screen" to keep your data safe</p>
+        <p className="text-teal-100 text-xs mt-0.5">Tap Share → "Add to Home Screen" to keep your data safe</p>
       </div>
       <button
         onClick={() => { setShow(false); sessionStorage.setItem('hs-banner-dismissed', '1') }}
-        className="text-blue-200 font-medium shrink-0 px-2"
+        className="text-teal-200 font-medium shrink-0 px-2"
       >
         ✕
       </button>

@@ -87,7 +87,7 @@ export default function SoldModal({ item, onConfirm, onClose }: Props) {
                 onClick={() => setMethod(m.key)}
                 className={`py-3 rounded-lg font-medium text-sm ${
                   method === m.key
-                    ? 'bg-slate-800 text-white'
+                    ? 'bg-iris-600 text-white'
                     : 'bg-slate-100 text-slate-600'
                 }`}
               >

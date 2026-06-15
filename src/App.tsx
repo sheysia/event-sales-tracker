@@ -73,7 +73,7 @@ export default function App() {
   return (
     <div className="min-h-screen flex flex-col bg-slate-50">
       <HomescreenBanner />
-      <header className="bg-slate-800 text-white px-4 py-3 flex justify-between items-center text-sm font-medium">
+      <header className="bg-gradient-to-r from-iris-900 via-iris-800 to-slate-800 text-white px-4 py-3 flex justify-between items-center text-sm font-medium">
         <span>{summary.unitsSold} sold</span>
         <span className="text-lg font-bold">${summary.totalRevenue.toFixed(2)}</span>
         <span>{summary.availableCount} available</span>
@@ -96,7 +96,7 @@ export default function App() {
             onClick={() => setTab(key)}
             className={`flex-1 py-3 text-sm font-medium transition-colors ${
               tab === key
-                ? 'text-slate-800 border-t-2 border-slate-800'
+                ? 'text-iris-700 border-t-2 border-iris-600'
                 : 'text-slate-400'
             }`}
           >
@@ -114,11 +114,11 @@ export default function App() {
       )}
 
       {toast && (
-        <div className="fixed bottom-16 left-4 right-4 bg-slate-800 text-white rounded-xl px-4 py-3 flex items-center justify-between shadow-lg z-40">
+        <div className="fixed bottom-16 left-4 right-4 bg-iris-900 text-white rounded-xl px-4 py-3 flex items-center justify-between shadow-lg z-40">
           <span className="text-sm font-medium">{toast.text}</span>
           <button
             onClick={() => handleUndo(toast.saleId)}
-            className="text-amber-400 font-bold text-sm ml-3"
+            className="text-iris-200 font-bold text-sm ml-3"
           >
             Undo
           </button>

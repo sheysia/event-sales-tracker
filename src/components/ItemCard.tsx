@@ -16,7 +16,7 @@ export default function ItemCard({ item, onSold, onEdit }: Props) {
         <div className="flex items-center gap-2">
           <span className="font-semibold text-base truncate">{item.name}</span>
           {item.category && (
-            <span className="text-xs bg-slate-100 text-slate-500 px-2 py-0.5 rounded-full shrink-0">{item.category}</span>
+            <span className="text-xs bg-iris-50 text-iris-600 px-2 py-0.5 rounded-full shrink-0">{item.category}</span>
           )}
         </div>
         <div className="flex items-center gap-3 mt-1 text-sm text-slate-500">

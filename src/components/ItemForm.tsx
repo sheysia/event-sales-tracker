@@ -110,7 +110,7 @@ export default function ItemForm({ item, onSave, onClose }: Props) {
           <button type="button" onClick={onClose} className="flex-1 py-3 rounded-lg border border-slate-300 text-slate-600 font-medium">
             Cancel
           </button>
-          <button type="submit" className="flex-1 py-3 rounded-lg bg-slate-800 text-white font-medium">
+          <button type="submit" className="flex-1 py-3 rounded-lg bg-iris-600 text-white font-medium">
             {item ? 'Save' : 'Add'}
           </button>
         </div>

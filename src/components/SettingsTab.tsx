@@ -42,7 +42,7 @@ export default function SettingsTab({ onImportDone }: Props) {
         <h3 className="font-bold text-base">Import</h3>
         <button
           onClick={() => setShowImport(true)}
-          className="w-full py-3 rounded-lg bg-slate-800 text-white font-medium text-sm"
+          className="w-full py-3 rounded-lg bg-iris-600 text-white font-medium text-sm"
         >
           Import from Excel
         </button>
@@ -94,21 +94,21 @@ export default function SettingsTab({ onImportDone }: Props) {
       </div>
 
       {/* Add to Home Screen instructions */}
-      <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 space-y-2">
-        <h3 className="font-bold text-sm text-blue-800">Add to Home Screen</h3>
-        <p className="text-xs text-blue-700">
+      <div className="bg-teal-500/5 border border-teal-500/20 rounded-xl p-4 space-y-2">
+        <h3 className="font-bold text-sm text-teal-700">Add to Home Screen</h3>
+        <p className="text-xs text-teal-600/80">
           For the best experience, add this app to your Home Screen: tap the Share button in Safari, then "Add to Home Screen". This keeps your data safe between sessions.
         </p>
       </div>
 
-      {/* Data notice */}
-      <div className="bg-slate-50 border border-slate-200 rounded-xl p-4">
-        <p className="text-xs text-slate-500 text-center">
-          This app runs in your browser. Your sales data is stored only on this device unless you export or share it.
+      {/* Tech + privacy footer */}
+      <div className="rounded-xl p-4 space-y-2">
+        <p className="text-xs text-slate-400 text-center leading-relaxed">
+          Hosted on Vercel. All sales data is stored locally on your device
+          and never uploaded. Export or share to move data off this device.
         </p>
+        <p className="text-center text-xs text-slate-300">Supported by Syneira Lab</p>
       </div>
-
-      <p className="text-center text-xs text-slate-400 pb-4">By Syneira Lab</p>
 
       {showImport && (
         <ExcelImport
