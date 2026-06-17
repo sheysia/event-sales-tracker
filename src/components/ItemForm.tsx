@@ -71,7 +71,7 @@ export default function ItemForm({ item, onSave, onClose }: Props) {
               <span className="text-xl text-slate-400">📷</span>
             )}
           </button>
-          <input ref={photoRef} type="file" accept="image/*" capture="environment" onChange={handlePhoto} className="hidden" />
+          <input ref={photoRef} type="file" accept="image/*" onChange={handlePhoto} className="hidden" />
           {photo && (
             <button type="button" onClick={() => setPhoto(undefined)} className="text-xs text-slate-400">
               Remove
