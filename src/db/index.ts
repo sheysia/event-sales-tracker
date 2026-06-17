@@ -8,6 +8,7 @@ export type Item = {
   remaining: number
   category?: string
   note?: string
+  photo?: string
   createdAt: string
   updatedAt: string
 }
@@ -32,6 +33,10 @@ class SalesDB extends Dexie {
   constructor() {
     super('event-sales-tracker')
     this.version(1).stores({
+      items: 'id, name, remaining, createdAt',
+      sales: 'id, itemId, paymentMethod, soldAt',
+    })
+    this.version(2).stores({
       items: 'id, name, remaining, createdAt',
       sales: 'id, itemId, paymentMethod, soldAt',
     })

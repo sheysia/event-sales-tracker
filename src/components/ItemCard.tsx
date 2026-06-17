@@ -12,6 +12,11 @@ export default function ItemCard({ item, onSold, onEdit }: Props) {
 
   return (
     <div className={`bg-white rounded-xl p-4 shadow-sm border border-slate-100 flex items-center gap-3 ${soldOut ? 'opacity-50' : ''}`}>
+      {item.photo && (
+        <div className="w-11 h-11 rounded-full overflow-hidden shrink-0 bg-slate-100">
+          <img src={item.photo} alt="" className="w-full h-full object-cover" />
+        </div>
+      )}
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-2">
           <span className="font-semibold text-base truncate">{item.name}</span>

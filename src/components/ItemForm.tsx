@@ -1,9 +1,10 @@
-import { useState, useEffect, type FormEvent } from 'react'
+import { useState, useEffect, useRef, type FormEvent } from 'react'
 import type { Item } from '../db'
+import { resizePhoto } from '../utils/photo'
 
 type Props = {
   item?: Item
-  onSave: (data: { name: string; askingPrice: number; quantity: number; category: string; note: string }) => void
+  onSave: (data: { name: string; askingPrice: number; quantity: number; category: string; note: string; photo?: string }) => void
   onClose: () => void
 }
 
@@ -13,6 +14,8 @@ export default function ItemForm({ item, onSave, onClose }: Props) {
   const [qty, setQty] = useState('1')
   const [category, setCategory] = useState('')
   const [note, setNote] = useState('')
+  const [photo, setPhoto] = useState<string | undefined>()
+  const photoRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
     if (item) {
@@ -21,8 +24,16 @@ export default function ItemForm({ item, onSave, onClose }: Props) {
       setQty(String(item.quantity))
       setCategory(item.category ?? '')
       setNote(item.note ?? '')
+      setPhoto(item.photo)
     }
   }, [item])
+
+  const handlePhoto = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+    const dataUrl = await resizePhoto(file)
+    setPhoto(dataUrl)
+  }
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault()
@@ -35,6 +46,7 @@ export default function ItemForm({ item, onSave, onClose }: Props) {
       quantity: Math.max(1, parsedQty || 1),
       category: category.trim(),
       note: note.trim(),
+      photo,
     })
   }
 
@@ -46,6 +58,26 @@ export default function ItemForm({ item, onSave, onClose }: Props) {
         className="bg-white w-full max-w-lg rounded-t-2xl sm:rounded-2xl p-6 space-y-4"
       >
         <h2 className="text-lg font-bold">{item ? 'Edit Item' : 'Add Item'}</h2>
+
+        <div className="flex items-center gap-3">
+          <button
+            type="button"
+            onClick={() => photoRef.current?.click()}
+            className="w-14 h-14 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center shrink-0 overflow-hidden"
+          >
+            {photo ? (
+              <img src={photo} alt="" className="w-full h-full object-cover" />
+            ) : (
+              <span className="text-xl text-slate-400">📷</span>
+            )}
+          </button>
+          <input ref={photoRef} type="file" accept="image/*" capture="environment" onChange={handlePhoto} className="hidden" />
+          {photo && (
+            <button type="button" onClick={() => setPhoto(undefined)} className="text-xs text-slate-400">
+              Remove
+            </button>
+          )}
+        </div>
 
         <div>
           <label className="block text-sm font-medium text-slate-600 mb-1">Name *</label>

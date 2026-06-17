@@ -31,7 +31,7 @@ export default function Dashboard({ onSold }: Props) {
     return list
   }, [items, filter, search])
 
-  const handleAdd = async (data: { name: string; askingPrice: number; quantity: number; category: string; note: string }) => {
+  const handleAdd = async (data: { name: string; askingPrice: number; quantity: number; category: string; note: string; photo?: string }) => {
     const now = new Date().toISOString()
     await db.items.add({
       id: nanoid(),
@@ -41,13 +41,14 @@ export default function Dashboard({ onSold }: Props) {
       remaining: data.quantity,
       category: data.category || undefined,
       note: data.note || undefined,
+      photo: data.photo,
       createdAt: now,
       updatedAt: now,
     })
     setShowForm(false)
   }
 
-  const handleEdit = async (data: { name: string; askingPrice: number; quantity: number; category: string; note: string }) => {
+  const handleEdit = async (data: { name: string; askingPrice: number; quantity: number; category: string; note: string; photo?: string }) => {
     if (!editItem) return
     const qtyDiff = data.quantity - editItem.quantity
     await db.items.update(editItem.id, {
@@ -57,6 +58,7 @@ export default function Dashboard({ onSold }: Props) {
       remaining: Math.max(0, editItem.remaining + qtyDiff),
       category: data.category || undefined,
       note: data.note || undefined,
+      photo: data.photo,
       updatedAt: new Date().toISOString(),
     })
     setEditItem(undefined)
