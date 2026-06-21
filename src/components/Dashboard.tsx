@@ -70,14 +70,20 @@ export default function Dashboard({ onSold }: Props) {
     { key: 'soldout', label: 'Sold Out' },
   ]
 
+  const inventoryValue = useMemo(() => {
+    if (!items) return 0
+    return items.reduce((sum, i) => sum + i.askingPrice * i.remaining, 0)
+  }, [items])
+
   const empty = !items || items.length === 0
 
   return (
     <div className="space-y-3">
       {!empty && (
         <>
-          <div className="flex gap-2">
-            {filters.map(f => (
+          <div className="flex items-center justify-between">
+            <div className="flex gap-2">
+              {filters.map(f => (
               <button
                 key={f.key}
                 onClick={() => setFilter(f.key)}
@@ -88,6 +94,10 @@ export default function Dashboard({ onSold }: Props) {
                 {f.label}
               </button>
             ))}
+            </div>
+            <div className="text-right text-sm text-slate-500">
+              Inventory <span className="font-semibold text-slate-700">${inventoryValue.toFixed(2)}</span>
+            </div>
           </div>
           <input
             type="text"
