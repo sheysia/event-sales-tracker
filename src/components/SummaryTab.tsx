@@ -1,3 +1,4 @@
+import { useMemo } from 'react'
 import { useLiveQuery } from 'dexie-react-hooks'
 import { db, type Sale } from '../db'
 import { useSummary } from '../db/useSummary'
@@ -34,7 +35,18 @@ type Props = {
 
 export default function SummaryTab({ onUndo }: Props) {
   const sales = useLiveQuery(() => db.sales.orderBy('soldAt').reverse().toArray(), [])
+  const items = useLiveQuery(() => db.items.toArray(), [])
   const summary = useSummary()
+
+  const inventoryValue = useMemo(() => {
+    if (!items) return 0
+    return items.reduce((sum, i) => sum + i.askingPrice * i.remaining, 0)
+  }, [items])
+
+  const inventoryRemaining = useMemo(() => {
+    if (!items) return 0
+    return items.reduce((sum, i) => sum + i.remaining, 0)
+  }, [items])
 
   const handleCopy = async () => {
     if (!sales) return
@@ -95,6 +107,17 @@ export default function SummaryTab({ onUndo }: Props) {
           </div>
         )}
       </div>
+
+      {/* Inventory balance */}
+      {inventoryRemaining > 0 && (
+        <div className="bg-white rounded-xl p-4 shadow-sm border border-slate-100 flex justify-between items-center">
+          <div>
+            <p className="text-sm text-slate-500">Remaining inventory</p>
+            <p className="text-xs text-slate-400 mt-0.5">{inventoryRemaining} units unsold</p>
+          </div>
+          <p className="text-lg font-bold">${inventoryValue.toFixed(2)}</p>
+        </div>
+      )}
 
       {/* Actions */}
       <div className="flex gap-2">
