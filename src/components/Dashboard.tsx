@@ -6,6 +6,7 @@ import ItemCard from './ItemCard'
 import ItemForm from './ItemForm'
 
 type Filter = 'all' | 'available' | 'soldout'
+type SortBy = 'newest' | 'name' | 'price'
 
 type Props = {
   onSold: (item: Item) => void
@@ -14,6 +15,7 @@ type Props = {
 export default function Dashboard({ onSold }: Props) {
   const [filter, setFilter] = useState<Filter>('all')
   const [search, setSearch] = useState('')
+  const [sortBy, setSortBy] = useState<SortBy>('newest')
   const [showForm, setShowForm] = useState(false)
   const [editItem, setEditItem] = useState<Item | undefined>()
 
@@ -28,8 +30,10 @@ export default function Dashboard({ onSold }: Props) {
       const q = search.toLowerCase()
       list = list.filter(i => i.name.toLowerCase().includes(q))
     }
+    if (sortBy === 'name') list = [...list].sort((a, b) => a.name.localeCompare(b.name))
+    else if (sortBy === 'price') list = [...list].sort((a, b) => b.askingPrice - a.askingPrice)
     return list
-  }, [items, filter, search])
+  }, [items, filter, search, sortBy])
 
   const handleAdd = async (data: { name: string; askingPrice: number; quantity: number; category: string; note: string; photo?: string }) => {
     const now = new Date().toISOString()
@@ -63,6 +67,17 @@ export default function Dashboard({ onSold }: Props) {
     })
     setEditItem(undefined)
   }
+
+  const handleDelete = async (item: Item) => {
+    if (!confirm(`Delete "${item.name}"? Sales records will be kept.`)) return
+    await db.items.delete(item.id)
+  }
+
+  const sorts: { key: SortBy; label: string }[] = [
+    { key: 'newest', label: 'Recent' },
+    { key: 'name', label: 'Name' },
+    { key: 'price', label: 'Price' },
+  ]
 
   const filters: { key: Filter; label: string }[] = [
     { key: 'all', label: 'All' },
@@ -99,13 +114,28 @@ export default function Dashboard({ onSold }: Props) {
               Inventory <span className="font-semibold text-slate-700">${inventoryValue.toFixed(2)}</span>
             </div>
           </div>
-          <input
-            type="text"
-            value={search}
-            onChange={e => setSearch(e.target.value)}
-            placeholder="Search items..."
-            className="w-full border border-slate-200 rounded-lg px-3 py-2.5 text-base outline-none focus:border-slate-400 bg-white"
-          />
+          <div className="flex gap-2 items-center">
+            <input
+              type="text"
+              value={search}
+              onChange={e => setSearch(e.target.value)}
+              placeholder="Search items..."
+              className="flex-1 border border-slate-200 rounded-lg px-3 py-2.5 text-base outline-none focus:border-slate-400 bg-white"
+            />
+            <div className="flex gap-1 shrink-0">
+              {sorts.map(s => (
+                <button
+                  key={s.key}
+                  onClick={() => setSortBy(s.key)}
+                  className={`px-2.5 py-2 rounded-lg text-xs font-medium ${
+                    sortBy === s.key ? 'bg-iris-100 text-iris-700' : 'bg-slate-50 text-slate-400'
+                  }`}
+                >
+                  {s.label}
+                </button>
+              ))}
+            </div>
+          </div>
         </>
       )}
 
@@ -122,7 +152,7 @@ export default function Dashboard({ onSold }: Props) {
       ) : (
         <div className="space-y-2">
           {filtered.map(item => (
-            <ItemCard key={item.id} item={item} onSold={onSold} onEdit={setEditItem} />
+            <ItemCard key={item.id} item={item} onSold={onSold} onEdit={setEditItem} onDelete={handleDelete} />
           ))}
         </div>
       )}

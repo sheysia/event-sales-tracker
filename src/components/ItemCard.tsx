@@ -4,9 +4,10 @@ type Props = {
   item: Item
   onSold: (item: Item) => void
   onEdit: (item: Item) => void
+  onDelete: (item: Item) => void
 }
 
-export default function ItemCard({ item, onSold, onEdit }: Props) {
+export default function ItemCard({ item, onSold, onEdit, onDelete }: Props) {
   const soldOut = item.remaining <= 0
   const hasStock = item.quantity > 1
 
@@ -47,12 +48,20 @@ export default function ItemCard({ item, onSold, onEdit }: Props) {
         >
           {soldOut ? 'Sold Out' : 'SOLD'}
         </button>
-        <button
-          onClick={() => onEdit(item)}
-          className="text-xs text-slate-400 hover:text-slate-600"
-        >
-          Edit
-        </button>
+        <div className="flex gap-3">
+          <button
+            onClick={() => onEdit(item)}
+            className="text-xs text-slate-400 hover:text-slate-600"
+          >
+            Edit
+          </button>
+          <button
+            onClick={() => onDelete(item)}
+            className="text-xs text-red-400 hover:text-red-600"
+          >
+            Del
+          </button>
+        </div>
       </div>
     </div>
   )
